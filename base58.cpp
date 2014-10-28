@@ -102,12 +102,16 @@ bool DecodeBase58(const std::string& str, std::vector<unsigned char>& vchRet) {
     return DecodeBase58(str.c_str(), vchRet);
 }
 
-std::string EncodeBase58Check(const std::vector<unsigned char>& vchIn) {
-    // add 4-byte hash check to the end
-    std::vector<unsigned char> vch(vchIn);
+std::string EncodeBase58Check(const unsigned char* pbegin, const unsigned char* pend) {
+    std::vector<unsigned char> vch(pbegin, pend);
     unsigned char *hash = Hash(vch.begin(), vch.end());
     vch.insert(vch.end(), hash, hash + 4);
     return EncodeBase58(vch);
+}
+
+std::string EncodeBase58Check(const std::vector<unsigned char>& vchIn) {
+    // add 4-byte hash check to the end
+    return EncodeBase58Check(vchIn.data(), vchIn.data() + vchIn.size());
 }
 
 bool DecodeBase58Check(const char* psz, std::vector<unsigned char>& vchRet) {

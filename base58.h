@@ -42,7 +42,13 @@ bool DecodeBase58(const char* psz, std::vector<unsigned char>& vchRet);
 bool DecodeBase58(const std::string& str, std::vector<unsigned char>& vchRet);
 
 /**
- * Encode a byte vector into a base58-encoded string, including checksum
+ * Encode a byte vector into a base58-encoded string, including checksum.
+ * pbegin and pend cannot be NULL, unless both are.
+ */
+std::string EncodeBase58Check(const unsigned char* pbegin, const unsigned char* pend);
+
+/**
+ * Encode a byte vector into a base58-encoded string, including checksum.
  */
 std::string EncodeBase58Check(const std::vector<unsigned char>& vchIn);
 
